@@ -22,7 +22,9 @@
     }
     .buttons {
       display: flex;
-      gap: 15px; /* separación inicial entre botones */
+      justify-content: center;
+      align-items: center;
+      gap: 150px; /* separación en PC */
       position: relative;
     }
     button {
@@ -36,15 +38,21 @@
     #yesBtn {
       background-color: #4CAF50;
       color: white;
-      position: relative;
       z-index: 2;
+      position: relative;
     }
     #noBtn {
       background-color: #f44336;
       color: white;
-      position: absolute;
+      position: absolute; /* se moverá libre */
       z-index: 1;
-      left: 200px; /* posición inicial separada */
+    }
+
+    /* En pantallas de máximo 600px (celulares), reducimos separación */
+    @media (max-width: 600px) {
+      .buttons {
+        gap: 80px;
+      }
     }
   </style>
 </head>
@@ -59,13 +67,22 @@
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
 
+    // colocar "No" centrado al inicio pero separado
+    function placeNoInitial() {
+      const yesRect = yesBtn.getBoundingClientRect();
+      noBtn.style.left = (yesRect.right + 80) + "px"; 
+      noBtn.style.top = yesRect.top + "px";
+    }
+
+    window.onload = placeNoInitial;
+
     // redirigir al sí
     yesBtn.addEventListener("click", () => {
       window.location.href = "https://www.youtube.com/shorts/qyb46m9N4OM";
     });
 
     // mover el "No" al azar sin caer encima del "Sí"
-    noBtn.addEventListener("mouseover", () => {
+    function moveNo() {
       const margin = 100; // distancia mínima
       let x, y;
 
@@ -79,9 +96,11 @@
 
       noBtn.style.left = `${x}px`;
       noBtn.style.top = `${y}px`;
-    });
+    }
+
+    // para PC (mouse) y celular (touch)
+    noBtn.addEventListener("mouseover", moveNo);
+    noBtn.addEventListener("touchstart", moveNo);
   </script>
 </body>
 </html>
-
-
