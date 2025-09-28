@@ -24,7 +24,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 150px; /* separación en PC */
+      gap: 80px; /* separación en PC */
       position: relative;
     }
     button {
@@ -34,6 +34,7 @@
       border: none;
       border-radius: 10px;
       transition: 0.2s;
+      position: relative;
     }
     #yesBtn {
       background-color: #4CAF50;
@@ -43,14 +44,14 @@
     #noBtn {
       background-color: #f44336;
       color: white;
+      position: absolute; /* se moverá libre */
       z-index: 1;
-      position: relative; /* empieza centrado */
     }
 
     /* En pantallas de máximo 600px (celulares), reducimos separación */
     @media (max-width: 600px) {
       .buttons {
-        gap: 25px; /* separación en celular */
+        gap: 25px; /* separación entre botones en móviles */
       }
     }
   </style>
@@ -65,6 +66,18 @@
   <script>
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
+    const buttonsContainer = document.querySelector(".buttons");
+
+    // colocar "No" inicial a la derecha del "Sí"
+    function placeNoInitial() {
+      const yesRect = yesBtn.getBoundingClientRect();
+      const containerRect = buttonsContainer.getBoundingClientRect();
+
+      noBtn.style.left = (yesRect.width + 80) + "px"; // separación inicial (PC)
+      noBtn.style.top = "0px";
+    }
+
+    window.onload = placeNoInitial;
 
     // redirigir al sí
     yesBtn.addEventListener("click", () => {
@@ -73,7 +86,7 @@
 
     // mover el "No" al azar sin caer encima del "Sí"
     function moveNo() {
-      const margin = 100; // distancia mínima
+      const margin = 120; // distancia mínima
       let x, y;
 
       do {
@@ -84,7 +97,6 @@
         Math.abs(y - yesBtn.offsetTop) < margin
       );
 
-      noBtn.style.position = "absolute"; // se vuelve libre al moverse
       noBtn.style.left = `${x}px`;
       noBtn.style.top = `${y}px`;
     }
@@ -95,3 +107,4 @@
   </script>
 </body>
 </html>
+
