@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¿Quieres ser mi novia?</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #ffe4ec;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+    h1 {
+      font-size: 2rem;
+      color: #ff4081;
+      margin-bottom: 40px;
+    }
+    .botones {
+      display: flex;
+      gap: 60px; /* separación entre los botones */
+    }
+    button {
+      padding: 15px 25px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    #si {
+      background-color: #ff4081;
+      color: white;
+    }
+    #no {
+      background-color: #ddd;
+      color: #333;
+      position: relative; /* empieza fijo */
+    }
+  </style>
+</head>
+<body>
+  <h1>¿Quieres ser mi novia? 💕</h1>
+  <div class="botones">
+    <button id="si">Sí</button>
+    <button id="no">No</button>
+  </div>
+
+  <script>
+    const btnSi = document.getElementById('si');
+    const btnNo = document.getElementById('no');
+
+    // Redirige si presiona "Sí"
+    btnSi.addEventListener('click', () => {
+      window.location.href = 'https://www.youtube.com/shorts/qyb46m9N4OM';
+    });
+
+    // Hace que el botón "No" se mueva a un lugar aleatorio
+    function moverBoton() {
+      const ancho = window.innerWidth - btnNo.offsetWidth;
+      const alto = window.innerHeight - btnNo.offsetHeight;
+      const x = Math.random() * ancho;
+      const y = Math.random() * alto;
+      btnNo.style.position = "absolute"; // ahora se mueve libre
+      btnNo.style.left = `${x}px`;
+      btnNo.style.top = `${y}px`;
+    }
+
+    // Detecta cuando intentan tocar el "No"
+    btnNo.addEventListener('mouseenter', moverBoton);
+    btnNo.addEventListener('mouseover', moverBoton);
+    btnNo.addEventListener('touchstart', moverBoton); // en celulares
+  </script>
+</body>
+</html>
